@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "517487395665",
+    "project_id": "flutteronlie97team",
+    "storage_bucket": "flutteronlie97team.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517487395665:android:f4dbcd65bd86a5bd068970",
+        "android_client_info": {
+          "package_name": "com.example.note_flutteronline_97"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_i_j8AV4ZXCQ1cuxFLxqgdTH0x11GNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
