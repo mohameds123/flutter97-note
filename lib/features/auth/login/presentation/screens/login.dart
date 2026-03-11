@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_flutteronline_97/features/auth/sign_up/presentation/screens/signup.dart';
+import 'package:note_flutteronline_97/features/create_note/presentation/screen/create_note_screen.dart';
 
 
 import '../../../../../core/widgets/app_txt_feild.dart';
@@ -29,11 +30,13 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<LoginCubit, LoginStates>(
           listener: (context, state) {
             if (state is LoginSuccessState){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>CreateNewNoteScreen()));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Login Successful"),
                   duration: Duration(seconds: 3),
                 ),
+
               );
             }else if (state is LoginErrorState){
               ScaffoldMessenger.of(context).showSnackBar(
@@ -119,6 +122,31 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
 
                               const SizedBox(height: 77),
+                              InkWell(
+                                onTap: () {
+                                  context.read<LoginCubit>().continueWithGoogle();
+                                },
+                                borderRadius: BorderRadius.circular(12),
+                                child: Container(
+                                  width: 312,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.white,
+                                  ),
+                                  child:  Center(
+                                    child: (state is LoginLoadingState)? CircularProgressIndicator():Text(
+                                      "Continue with google",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
 
                               InkWell(
                                 onTap: () {
