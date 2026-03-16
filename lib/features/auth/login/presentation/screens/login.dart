@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_flutteronline_97/core/widgets/app_button.dart';
 import 'package:note_flutteronline_97/features/auth/sign_up/presentation/screens/signup.dart';
 import 'package:note_flutteronline_97/features/create_note/presentation/screen/create_note_screen.dart';
+import 'package:note_flutteronline_97/features/home/presentation/screen/home_screen.dart';
 
 
 import '../../../../../core/widgets/app_txt_feild.dart';
@@ -29,8 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
         create: (context) => LoginCubit(),
         child: BlocConsumer<LoginCubit, LoginStates>(
           listener: (context, state) {
-            if (state is LoginSuccessState){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>CreateNewNoteScreen()));
+            if (state is LoginSuccessState) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (_) => HomeScreen()));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Login Successful"),
@@ -38,12 +41,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
               );
-            }else if (state is LoginErrorState){
+            } else if (state is LoginErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
+                SnackBar(
                   content: Text(state.errorMessage),
                   duration: Duration(seconds: 3),
-                   backgroundColor: Colors.red,
+                  backgroundColor: Colors.red,
                 ),
               );
             }
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
 
-                              TextFormFiledWidget(
+                               TextFormFiledWidget(
                                 obscureText: _isObscure,
                                 hintTxt: 'Enter Your Password',
                                 keyType: TextInputType.visiblePassword,
@@ -122,56 +125,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
 
                               const SizedBox(height: 77),
-                              InkWell(
-                                onTap: () {
-                                  context.read<LoginCubit>().continueWithGoogle();
-                                },
-                                borderRadius: BorderRadius.circular(12),
-                                child: Container(
-                                  width: 312,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                  ),
-                                  child:  Center(
-                                    child: (state is LoginLoadingState)? CircularProgressIndicator():Text(
-                                      "Continue with google",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              AppButton(function: () {
+                                context
+                                    .read<LoginCubit>()
+                                    .continueWithGoogle();
+                              }, buttonTxt: "Continue with google"),
                               const SizedBox(height: 12),
+                              AppButton(function: () {
+                                context.read<LoginCubit>().login(
+                                    userEmail: emailController.text,
+                                    userPass: passController.text);
+                              }, buttonTxt: "Login"),
 
-                              InkWell(
-                                onTap: () {
-                                  context.read<LoginCubit>().login(userEmail: emailController.text, userPass: passController.text);
-                                },
-                                borderRadius: BorderRadius.circular(12),
-                                child: Container(
-                                  width: 312,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                  ),
-                                  child:  Center(
-                                    child: (state is LoginLoadingState)? CircularProgressIndicator():Text(
-                                      "Login",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
 
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -182,9 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16,
                                     ),),
-                                  TextButton(onPressed: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
-                                  }, child: Text("Sign Up",    style: TextStyle(
+                                  TextButton(onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => SignUpScreen()));
+                                  }, child: Text("Sign Up", style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,

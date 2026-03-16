@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_flutteronline_97/features/create_note/data/note_model.dart';
+import 'package:note_flutteronline_97/core/model/note_model.dart';
 import 'package:note_flutteronline_97/features/create_note/logic/cubit.dart';
 import 'package:note_flutteronline_97/features/create_note/logic/states.dart';
+import 'package:note_flutteronline_97/features/home/presentation/screen/home_screen.dart';
 
 import '../../../../core/widgets/app_txt_feild.dart';
 
@@ -26,7 +28,9 @@ class CreateNewNoteScreen extends StatelessWidget {
                 duration: Duration(seconds: 3),
               ),
 
+
             );
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
           }else if (state is CreateNoteStatesErrorState){
             ScaffoldMessenger.of(context).showSnackBar(
                SnackBar(
@@ -128,7 +132,7 @@ class CreateNewNoteScreen extends StatelessWidget {
                       height: 55,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<CreateNoteCubit>().createNote(NoteModel(noteName: headlineController.text, noteHeadline: descriptionController.text, time: Timestamp.now()));
+                          context.read<CreateNoteCubit>().createNote(NoteModel(noteName: headlineController.text, noteHeadline: descriptionController.text, time: DateTime.now(),userId: FirebaseAuth.instance.currentUser!.uid));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

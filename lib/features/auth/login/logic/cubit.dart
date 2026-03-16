@@ -20,7 +20,7 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   Future continueWithGoogle() async {
-    emit(LoginLoadingState());
+    emit(ContinueWithGoogleLoadingState());
     try {
       final GoogleSignInAccount? signIn = await GoogleSignIn().signIn();
       if (signIn == null) {

@@ -3,20 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class NoteModel {
   String noteName;
   String noteHeadline;
-  Timestamp time;
+  DateTime time;
+  String userId;
 
   NoteModel({
     required this.noteName,
     required this.noteHeadline,
     required this.time,
+    required this.userId,
   });
 
   // Convert Firestore document → Dart object
   factory NoteModel.fromJson(Map<String, dynamic> json) {
     return NoteModel(
       noteName: json['noteName'],
+      userId: json['userId'],
       noteHeadline: json['noteHeadline'],
-      time: json['time'],
+      time: DateTime.parse(json['time'])
     );
   }
 
@@ -25,7 +28,8 @@ class NoteModel {
     return {
       'noteName': noteName,
       'noteHeadline': noteHeadline,
-      'time': time,
+      'time': time.toIso8601String(),
+      'userId': userId,
     };
   }
 }
